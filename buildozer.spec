@@ -8,7 +8,7 @@ source.include_exts = py,kv,json,txt
 
 version = 1.0
 
-requirements = python3,kivy==2.3.1,kivymd==1.1.1,yt-dlp,certifi
+requirements = python3,kivy==2.3.1,kivymd==1.1.1,yt-dlp,certifi,sqlite3,pillow
 
 orientation = portrait
 fullscreen = 0
