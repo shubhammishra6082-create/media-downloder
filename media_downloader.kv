@@ -1,0 +1,210 @@
+#:import Clipboard kivy.core.clipboard.Clipboard
+
+# ----------------------------------------------------------------
+# HOME SCREEN
+# ----------------------------------------------------------------
+<HomeScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "16dp"
+        spacing: "10dp"
+
+        MDLabel:
+            text: "Media Downloader"
+            font_style: "H5"
+            bold: True
+            size_hint_y: None
+            height: "36dp"
+            theme_text_color: "Custom"
+            text_color: 0.25, 0.7, 1, 1
+
+        MDTextField:
+            id: url_input
+            hint_text: "Paste a video/media URL here"
+            mode: "rectangle"
+
+        BoxLayout:
+            size_hint_y: None
+            height: "44dp"
+            spacing: "8dp"
+
+            MDRaisedButton:
+                text: "PASTE"
+                size_hint_x: 0.33
+                on_release: root.paste_url()
+
+            MDRaisedButton:
+                text: "ANALYZE"
+                size_hint_x: 0.34
+                md_bg_color: 0.2, 0.5, 0.9, 1
+                on_release: root.analyze_url()
+
+            MDRaisedButton:
+                text: "CLEAR"
+                size_hint_x: 0.33
+                on_release: root.clear_url()
+
+        MDLabel:
+            id: platform_label
+            text: ""
+            size_hint_y: None
+            height: "22dp"
+            theme_text_color: "Custom"
+            text_color: 0.7, 0.7, 0.75, 1
+
+        ScrollView:
+            MDBoxLayout:
+                id: info_box
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: "10dp"
+                padding: "2dp"
+
+                # Filled in dynamically by main.py once Analyze succeeds:
+                # thumbnail, title, duration, quality Spinner, Download
+                # button, and a progress bar with Pause/Resume/Cancel.
+
+
+# ----------------------------------------------------------------
+# HISTORY SCREEN
+# ----------------------------------------------------------------
+<HistoryScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "16dp"
+        spacing: "10dp"
+
+        MDLabel:
+            text: "Download History"
+            font_style: "H5"
+            bold: True
+            size_hint_y: None
+            height: "36dp"
+            theme_text_color: "Custom"
+            text_color: 0.25, 0.7, 1, 1
+
+        BoxLayout:
+            size_hint_y: None
+            height: "44dp"
+            spacing: "8dp"
+
+            MDTextField:
+                id: search_input
+                hint_text: "Search by title or platform"
+                mode: "rectangle"
+
+            MDIconButton:
+                icon: "magnify"
+                on_release: root.do_search()
+
+        ScrollView:
+            MDBoxLayout:
+                id: history_list_box
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: "8dp"
+
+
+# ----------------------------------------------------------------
+# SETTINGS SCREEN
+# ----------------------------------------------------------------
+<SettingsScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "16dp"
+        spacing: "12dp"
+
+        MDLabel:
+            text: "Settings"
+            font_style: "H5"
+            bold: True
+            size_hint_y: None
+            height: "36dp"
+            theme_text_color: "Custom"
+            text_color: 0.25, 0.7, 1, 1
+
+        MDLabel:
+            id: current_folder_label
+            text: "Current folder:\n(loading...)"
+            size_hint_y: None
+            height: "50dp"
+            theme_text_color: "Custom"
+            text_color: 0.7, 0.7, 0.75, 1
+
+        MDTextField:
+            id: folder_input
+            hint_text: "New download folder path"
+            mode: "rectangle"
+
+        MDRaisedButton:
+            text: "SAVE FOLDER"
+            on_release: root.save_folder()
+
+        MDRaisedButton:
+            id: theme_button
+            text: "Switch to Light Mode"
+            on_release: root.toggle_theme()
+
+        MDRaisedButton:
+            text: "CLEAR HISTORY"
+            md_bg_color: 0.8, 0.2, 0.2, 1
+            on_release: root.confirm_clear_history()
+
+        MDLabel:
+            text: "Only download content you own the rights to, or that is explicitly permitted for download (Creative Commons, public domain, your own uploads, etc). Respect each platform's Terms of Service."
+            theme_text_color: "Custom"
+            text_color: 0.5, 0.5, 0.55, 1
+            font_style: "Caption"
+            size_hint_y: None
+            height: "80dp"
+            text_size: self.width, None
+
+
+# ----------------------------------------------------------------
+# ROOT WIDGET (screen manager + bottom nav bar)
+# ----------------------------------------------------------------
+MDBoxLayout:
+    orientation: "vertical"
+    md_bg_color: 0.03, 0.03, 0.05, 1
+
+    MDScreenManager:
+        id: sm
+
+        HomeScreen:
+            name: "home"
+            id: home_screen
+
+        HistoryScreen:
+            name: "history"
+            id: history_screen
+
+        SettingsScreen:
+            name: "settings"
+            id: settings_screen
+
+    MDBoxLayout:
+        size_hint_y: None
+        height: "60dp"
+        md_bg_color: 0.05, 0.06, 0.09, 1
+        padding: "4dp"
+        spacing: "4dp"
+
+        MDIconButton:
+            icon: "home"
+            theme_text_color: "Custom"
+            text_color: 0.3, 0.7, 1, 1
+            on_release: app.switch_screen("home")
+
+        MDIconButton:
+            icon: "history"
+            theme_text_color: "Custom"
+            text_color: 0.3, 0.7, 1, 1
+            on_release: app.switch_screen("history")
+
+        MDIconButton:
+            icon: "cog"
+            theme_text_color: "Custom"
+            text_color: 0.3, 0.7, 1, 1
+            on_release: app.switch_screen("settings")
