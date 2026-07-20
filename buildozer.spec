@@ -18,7 +18,7 @@ android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 android.api = 29
 android.minapi = 24
 
-p4a.branch = 2024.1.21
+p4a.branch = v2024.01.21
 
 [buildozer]
 log_level = 2
